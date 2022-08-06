@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import QDialog, QPushButton, QVBoxLayout
 from PyQt5 import QtCore
 from qt_material import apply_stylesheet, QtStyleTools, list_themes
+from PyQt5.QtGui import QColor, QIcon
 
 color_dict = {'dark_amber':'#ffd740', 'dark_blue':'#448aff', 'dark_cyan':'#4dd0e1', 'dark_lightgreen':'#8bc34a', 'dark_pink': '#ff4081', 'dark_purple':'#ab47bc', 'dark_red':'#ff1744',\
         'dark_teal':'#1de9b6', 'dark_yellow':'#ffff00', 'light_blue':'#2979ff', 'light_amber':'#ffc400', 'light_blue_500':'#03a9f4','light_cyan':'#00e5ff', 'light_cyan_500':'#00bcd4','light_lightgreen':'#64dd17', \
@@ -50,13 +51,14 @@ class View:
     def MaximizeWindow(self):
         if self.data_converstion_ui.isMaximized():
             self.data_converstion_ui.showNormal()
+            self.data_converstion_ui.data_conversion_max.setIcon(QIcon(u":/images/images/icon_maximize.png"))
            
         else:
             self.data_converstion_ui.showMaximized()
-
+            self.data_converstion_ui.data_conversion_max.setIcon(QIcon(u":/images/images/icon_restore.png"))
     def normalWindow(self):
         self.data_converstion_ui.showNormal()
-
+        
     def MinimusedWindow(self):
         self.data_converstion_ui.showMinimized()
 

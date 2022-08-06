@@ -15,21 +15,20 @@ class Ui_Data_conversion(QWidget):
     def setupUi(self):
         if not self.objectName():
             self.setObjectName(u"Form")
-        self.resize(952, 664)
-        self.verticalLayout_7 = QVBoxLayout(self)
-        self.verticalLayout_7.setSpacing(0)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.resize(967, 790)
+        self.verticalLayout_3 = QVBoxLayout(self)
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.frame = QFrame(self)
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_3 = QVBoxLayout(self.frame)
-        self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_8 = QHBoxLayout(self.frame)
+        self.horizontalLayout_8.setSpacing(0)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
@@ -59,6 +58,16 @@ class Ui_Data_conversion(QWidget):
 
         self.horizontalLayout_3.addWidget(self.data_conversion_settings)
 
+        self.data_conversion_min = QPushButton(self.frame)
+        self.data_conversion_min.setObjectName(u"data_conversion_min")
+        self.data_conversion_min.setMinimumSize(QSize(28, 28))
+        self.data_conversion_min.setMaximumSize(QSize(28, 28))
+        icon1 = QIcon()
+        icon1.addFile(u":/images/images/icon_minimize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.data_conversion_min.setIcon(icon1)
+
+        self.horizontalLayout_3.addWidget(self.data_conversion_min)
+
         self.data_conversion_max = QPushButton(self.frame)
         self.data_conversion_max.setObjectName(u"data_conversion_max")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -68,21 +77,11 @@ class Ui_Data_conversion(QWidget):
         self.data_conversion_max.setSizePolicy(sizePolicy1)
         self.data_conversion_max.setMinimumSize(QSize(28, 28))
         self.data_conversion_max.setMaximumSize(QSize(28, 28))
-        icon1 = QIcon()
-        icon1.addFile(u":/images/images/icon_maximize.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.data_conversion_max.setIcon(icon1)
+        icon2 = QIcon()
+        icon2.addFile(u":/images/images/icon_maximize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.data_conversion_max.setIcon(icon2)
 
         self.horizontalLayout_3.addWidget(self.data_conversion_max)
-
-        self.data_conversion_min = QPushButton(self.frame)
-        self.data_conversion_min.setObjectName(u"data_conversion_min")
-        self.data_conversion_min.setMinimumSize(QSize(28, 28))
-        self.data_conversion_min.setMaximumSize(QSize(28, 28))
-        icon2 = QIcon()
-        icon2.addFile(u":/images/images/icon_minimize.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.data_conversion_min.setIcon(icon2)
-
-        self.horizontalLayout_3.addWidget(self.data_conversion_min)
 
         self.data_conversion_close = QPushButton(self.frame)
         self.data_conversion_close.setObjectName(u"data_conversion_close")
@@ -98,13 +97,11 @@ class Ui_Data_conversion(QWidget):
         self.horizontalLayout_4.addLayout(self.horizontalLayout_3)
 
 
-        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
+        self.horizontalLayout_8.addLayout(self.horizontalLayout_4)
 
 
-        self.verticalLayout_7.addWidget(self.frame)
+        self.verticalLayout_3.addWidget(self.frame)
 
-        self.horizontalLayout_8 = QHBoxLayout()
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(9)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -234,34 +231,6 @@ class Ui_Data_conversion(QWidget):
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, -1, -1, -1)
-        self.update_file = QPushButton(self.groupBox_8)
-        self.update_file.setObjectName(u"update_file")
-
-        self.gridLayout.addWidget(self.update_file, 0, 3, 1, 1)
-
-        self.DC_OutputLE = QLineEdit(self.groupBox_8)
-        self.DC_OutputLE.setObjectName(u"DC_OutputLE")
-        self.DC_OutputLE.setMinimumSize(QSize(0, 25))
-        self.DC_OutputLE.setStyleSheet(u"")
-
-        self.gridLayout.addWidget(self.DC_OutputLE, 1, 1, 1, 1)
-
-        self.DC_OutPutLB = QLabel(self.groupBox_8)
-        self.DC_OutPutLB.setObjectName(u"DC_OutPutLB")
-        self.DC_OutPutLB.setMinimumSize(QSize(85, 25))
-        self.DC_OutPutLB.setFont(font1)
-
-        self.gridLayout.addWidget(self.DC_OutPutLB, 1, 0, 1, 1)
-
-        self.DC_OutputPB = QPushButton(self.groupBox_8)
-        self.DC_OutputPB.setObjectName(u"DC_OutputPB")
-        self.DC_OutputPB.setMinimumSize(QSize(100, 0))
-        self.DC_OutputPB.setMaximumSize(QSize(100, 16777215))
-        self.DC_OutputPB.setFont(font1)
-        self.DC_OutputPB.setStyleSheet(u"")
-
-        self.gridLayout.addWidget(self.DC_OutputPB, 1, 2, 1, 1)
-
         self.label_DC_InputLB = QLabel(self.groupBox_8)
         self.label_DC_InputLB.setObjectName(u"label_DC_InputLB")
         self.label_DC_InputLB.setMinimumSize(QSize(75, 25))
@@ -282,6 +251,34 @@ class Ui_Data_conversion(QWidget):
         self.DC_InputPB.setFont(font1)
 
         self.gridLayout.addWidget(self.DC_InputPB, 0, 2, 1, 1)
+
+        self.update_file = QPushButton(self.groupBox_8)
+        self.update_file.setObjectName(u"update_file")
+
+        self.gridLayout.addWidget(self.update_file, 0, 3, 1, 1)
+
+        self.DC_OutPutLB = QLabel(self.groupBox_8)
+        self.DC_OutPutLB.setObjectName(u"DC_OutPutLB")
+        self.DC_OutPutLB.setMinimumSize(QSize(85, 25))
+        self.DC_OutPutLB.setFont(font1)
+
+        self.gridLayout.addWidget(self.DC_OutPutLB, 1, 0, 1, 1)
+
+        self.DC_OutputLE = QLineEdit(self.groupBox_8)
+        self.DC_OutputLE.setObjectName(u"DC_OutputLE")
+        self.DC_OutputLE.setMinimumSize(QSize(0, 25))
+        self.DC_OutputLE.setStyleSheet(u"")
+
+        self.gridLayout.addWidget(self.DC_OutputLE, 1, 1, 1, 1)
+
+        self.DC_OutputPB = QPushButton(self.groupBox_8)
+        self.DC_OutputPB.setObjectName(u"DC_OutputPB")
+        self.DC_OutputPB.setMinimumSize(QSize(100, 0))
+        self.DC_OutputPB.setMaximumSize(QSize(100, 16777215))
+        self.DC_OutputPB.setFont(font1)
+        self.DC_OutputPB.setStyleSheet(u"")
+
+        self.gridLayout.addWidget(self.DC_OutputPB, 1, 2, 1, 1)
 
 
         self.verticalLayout_6.addLayout(self.gridLayout)
@@ -418,27 +415,25 @@ class Ui_Data_conversion(QWidget):
         self.verticalLayout.addWidget(self.groupBox)
 
 
-        self.horizontalLayout_8.addLayout(self.verticalLayout)
+        self.verticalLayout_3.addLayout(self.verticalLayout)
 
-        self.frame_2 = QFrame(self)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setFrameShape(QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-
-        self.horizontalLayout_8.addWidget(self.frame_2)
-
-
-        self.verticalLayout_7.addLayout(self.horizontalLayout_8)
-
+        self.horizontalLayout_9 = QHBoxLayout()
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.label_2 = QLabel(self)
         self.label_2.setObjectName(u"label_2")
-        
-        self.verticalLayout_7.addWidget(self.label_2)
-        #self.menu_bar = QMenuBar()
-        #self.settings_menu = QMenu('Themes')
 
-        #self.menu_bar.addMenu(self.settings_menu)
-        #self.horizontalLayout_3.setMenuBar(self.menu_bar)
+        self.horizontalLayout_9.addWidget(self.label_2)
+
+        self.Qsize_widget = QWidget(self)
+        self.Qsize_widget.setObjectName(u"Qsize_widget")
+        self.Qsize_widget.setMinimumSize(QSize(16, 16))
+        self.Qsize_widget.setStyleSheet(u"background-image: url(:/images/images/cil-size-grip.png);")
+        QSizeGrip(self.Qsize_widget)
+        self.horizontalLayout_9.addWidget(self.Qsize_widget, 0, Qt.AlignRight)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_9)
+
 
         self.retranslateUi()
 
@@ -449,8 +444,8 @@ class Ui_Data_conversion(QWidget):
         self.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.label.setText(QCoreApplication.translate("Form", u" Data conversion", None))
         self.data_conversion_settings.setText("")
-        self.data_conversion_max.setText("")
         self.data_conversion_min.setText("")
+        self.data_conversion_max.setText("")
         self.data_conversion_close.setText("")
         self.groupBox_2.setTitle(QCoreApplication.translate("Form", u"settings", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("Form", u"Output file", None))
@@ -468,11 +463,11 @@ class Ui_Data_conversion(QWidget):
         self.QFlag_batch_of_file.setText(QCoreApplication.translate("Form", u"Q Flag - similar group files ", None))
         self.QFlag_No.setText(QCoreApplication.translate("Form", u"No Q Flag", None))
         self.groupBox_8.setTitle(QCoreApplication.translate("Form", u"Raw file information", None))
+        self.label_DC_InputLB.setText(QCoreApplication.translate("Form", u"Input File or Folder", None))
+        self.DC_InputPB.setText(QCoreApplication.translate("Form", u"Browse", None))
         self.update_file.setText(QCoreApplication.translate("Form", u"update", None))
         self.DC_OutPutLB.setText(QCoreApplication.translate("Form", u"Output Folder", None))
         self.DC_OutputPB.setText(QCoreApplication.translate("Form", u"Browse", None))
-        self.label_DC_InputLB.setText(QCoreApplication.translate("Form", u"Input File or Folder", None))
-        self.DC_InputPB.setText(QCoreApplication.translate("Form", u"Browse", None))
         self.label_5.setText(QCoreApplication.translate("Form", u"Cnv", None))
         self.label_6.setText(QCoreApplication.translate("Form", u"Csv", None))
         self.groupBox.setTitle(QCoreApplication.translate("Form", u"Output file format information", None))
@@ -480,6 +475,9 @@ class Ui_Data_conversion(QWidget):
         self.DC_convertData_PB.setText(QCoreApplication.translate("Form", u"Convert ", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"DAM-IOW-V1.0", None))
     # retranslateUi
+
+
+
 
         self.frame.installEventFilter(self)
 

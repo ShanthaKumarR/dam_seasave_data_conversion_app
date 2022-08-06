@@ -334,6 +334,7 @@ class DataConversionController(InputFileSystemViewer):
                     input_file_name  = content[key]
                     if content[key] == 'nil':
                         self.view.DC_MultiRB.setChecked(True)
+                        self.cnv_folder_window_resize()
                     else:
                         if content['is_file']:
                             self.view.DC_SingleRB.setChecked(True)
