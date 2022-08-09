@@ -4,8 +4,6 @@ from seasave_data_conversion.cnv_converter import  PangaeaColumnAttribute, Panga
 from utils.previousData import PreviousData
 from controller.data_conversion_controller import DataConversionController
 
-
-
 class Model:
     def __init__(self):
         self.view = View()

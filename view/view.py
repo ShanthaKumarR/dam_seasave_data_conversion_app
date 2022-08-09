@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtWidgets import QDialog, QPushButton, QVBoxLayout
 from PyQt5 import QtCore
 from qt_material import apply_stylesheet, QtStyleTools, list_themes
-from PyQt5.QtGui import QColor, QIcon
+from PyQt5.QtGui import  QIcon
 
 color_dict = {'dark_amber':'#ffd740', 'dark_blue':'#448aff', 'dark_cyan':'#4dd0e1', 'dark_lightgreen':'#8bc34a', 'dark_pink': '#ff4081', 'dark_purple':'#ab47bc', 'dark_red':'#ff1744',\
         'dark_teal':'#1de9b6', 'dark_yellow':'#ffff00', 'light_blue':'#2979ff', 'light_amber':'#ffc400', 'light_blue_500':'#03a9f4','light_cyan':'#00e5ff', 'light_cyan_500':'#00bcd4','light_lightgreen':'#64dd17', \
@@ -18,9 +18,7 @@ class View:
 
     def set_app_style_sheet(self, header_color, color):
         self.data_converstion_ui.label.setStyleSheet('background-color:'+header_color)
-        #self.data_converstion_ui..setStyleSheet('background-color: #448aff')
         extra = {'density_scale': '0',}
-        
         apply_stylesheet(self.data_converstion_ui, color, invert_secondary=True, extra=extra)
 
     
