@@ -11,7 +11,7 @@ from PyQt5.QtCore import QSize
 import json
 
 
-from data_conversion.ultis.QFlag import QFlagWindow
+from UI.QFlag import QFlagWindow
 
 import math
 

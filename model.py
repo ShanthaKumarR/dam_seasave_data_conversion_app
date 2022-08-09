@@ -22,7 +22,6 @@ class Model:
         self.view.data_conversion_controls(self.controller)
         
 
-
 if __name__ == '__main__':
     model_obj = Model()
     model_obj.controller.data_conversion_on_open_run()

@@ -49,8 +49,6 @@ class QFlagWindow(QDialog):
         
         self.vbox_layout_1.addWidget(self.title_label, 0, QtCore.Qt.AlignHCenter)
         self.vbox_layout_1.addWidget(self.first_frame)
-       
-        #self.vbox_layout_1.addWidget(self.grid_layout)
         self.vbox_layout_1.addWidget(self.control_button)
         self.index_writer_lock = Lock()
         
@@ -64,8 +62,7 @@ class QFlagWindow(QDialog):
         self.obtained_Qflag = [(attribute, spb.value()) for chb, spb, attribute in zip(self.Qflag_checkbox, self.Qflag_spbox, self.attribute_list) if chb.isChecked()]
         self.flag_values = list()
         self.new_index = list()
-        #new_index = self.attribute_list
-        
+
         for i in self.obtained_Qflag:
             att, flag = i
             self.new_index.append(att+' Qflag')
