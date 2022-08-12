@@ -19,6 +19,7 @@ class Model:
         output_file_formatting['output_format'].append({'txt':TextWriter})
         data_conversion_object['previous_data_class'] = PreviousData
         self.controller = DataConversionController(data_conversion_object, data_base_options, output_file_formatting)
+        
         self.view.data_conversion_controls(self.controller)
         
 

@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/cil-folder.png</file>
+    <file>images/icon_close.png</file>
+    <file>images/icon_maximize.png</file>
+    <file>images/cil-size-grip.png</file>
+    <file>images/icon_minimize.png</file>
+    <file>images/icon_restore.png</file>
+    <file>images/icon_settings.png</file>
+  </qresource>
+</RCC>
