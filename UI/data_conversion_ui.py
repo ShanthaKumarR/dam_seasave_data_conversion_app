@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from UI import icons
 
-
+#self.frame.installEventFilter(self)
 class Ui_Data_conversion(QWidget):
     def __init__(self):
         self.app = QApplication(sys.argv)
@@ -15,21 +15,21 @@ class Ui_Data_conversion(QWidget):
     def setupUi(self):
         if not self.objectName():
             self.setObjectName(u"Form")
-        self.resize(967, 790)
+        self.resize(967, 844)
         self.verticalLayout_3 = QVBoxLayout(self)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.frame = QFrame(self)
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_8 = QHBoxLayout(self.frame)
-        self.horizontalLayout_8.setSpacing(0)
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.verticalLayout_7 = QVBoxLayout(self.frame)
+        self.verticalLayout_7.setSpacing(0)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
@@ -43,12 +43,15 @@ class Ui_Data_conversion(QWidget):
         font.setWeight(75)
         self.label.setFont(font)
 
-        self.horizontalLayout_4.addWidget(self.label)
+        self.verticalLayout_7.addWidget(self.label)
+
+
+        self.horizontalLayout_4.addWidget(self.frame)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.data_conversion_settings = QPushButton(self.frame)
+        self.data_conversion_settings = QPushButton(self)
         self.data_conversion_settings.setObjectName(u"data_conversion_settings")
         self.data_conversion_settings.setMinimumSize(QSize(28, 28))
         self.data_conversion_settings.setMaximumSize(QSize(28, 28))
@@ -58,7 +61,7 @@ class Ui_Data_conversion(QWidget):
 
         self.horizontalLayout_3.addWidget(self.data_conversion_settings)
 
-        self.data_conversion_min = QPushButton(self.frame)
+        self.data_conversion_min = QPushButton(self)
         self.data_conversion_min.setObjectName(u"data_conversion_min")
         self.data_conversion_min.setMinimumSize(QSize(28, 28))
         self.data_conversion_min.setMaximumSize(QSize(28, 28))
@@ -68,7 +71,7 @@ class Ui_Data_conversion(QWidget):
 
         self.horizontalLayout_3.addWidget(self.data_conversion_min)
 
-        self.data_conversion_max = QPushButton(self.frame)
+        self.data_conversion_max = QPushButton(self)
         self.data_conversion_max.setObjectName(u"data_conversion_max")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -83,7 +86,7 @@ class Ui_Data_conversion(QWidget):
 
         self.horizontalLayout_3.addWidget(self.data_conversion_max)
 
-        self.data_conversion_close = QPushButton(self.frame)
+        self.data_conversion_close = QPushButton(self)
         self.data_conversion_close.setObjectName(u"data_conversion_close")
         self.data_conversion_close.setMinimumSize(QSize(28, 28))
         self.data_conversion_close.setMaximumSize(QSize(28, 28))
@@ -97,10 +100,7 @@ class Ui_Data_conversion(QWidget):
         self.horizontalLayout_4.addLayout(self.horizontalLayout_3)
 
 
-        self.horizontalLayout_8.addLayout(self.horizontalLayout_4)
-
-
-        self.verticalLayout_3.addWidget(self.frame)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(9)
@@ -356,20 +356,6 @@ class Ui_Data_conversion(QWidget):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.DP_OPFileName_LE = QLabel(self.groupBox)
-        self.DP_OPFileName_LE.setObjectName(u"DP_OPFileName_LE")
-        self.DP_OPFileName_LE.setFont(font1)
-
-        self.horizontalLayout.addWidget(self.DP_OPFileName_LE)
-
-        self.DP_OutputFileNameLE = QLineEdit(self.groupBox)
-        self.DP_OutputFileNameLE.setObjectName(u"DP_OutputFileNameLE")
-        self.DP_OutputFileNameLE.setMinimumSize(QSize(0, 0))
-        self.DP_OutputFileNameLE.setMaximumSize(QSize(16777215, 16777215))
-        self.DP_OutputFileNameLE.setStyleSheet(u"")
-
-        self.horizontalLayout.addWidget(self.DP_OutputFileNameLE)
-
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
@@ -401,12 +387,22 @@ class Ui_Data_conversion(QWidget):
         self.DC_convertData_PB.setObjectName(u"DC_convertData_PB")
         sizePolicy.setHeightForWidth(self.DC_convertData_PB.sizePolicy().hasHeightForWidth())
         self.DC_convertData_PB.setSizePolicy(sizePolicy)
-        self.DC_convertData_PB.setMinimumSize(QSize(0, 35))
+        self.DC_convertData_PB.setMinimumSize(QSize(0, 0))
         self.DC_convertData_PB.setMaximumSize(QSize(100, 16777215))
         self.DC_convertData_PB.setFont(font1)
         self.DC_convertData_PB.setStyleSheet(u"")
 
         self.horizontalLayout_7.addWidget(self.DC_convertData_PB)
+
+        self.cancelbtn = QPushButton(self.groupBox)
+        self.cancelbtn.setObjectName(u"cancelbtn")
+        sizePolicy6 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.cancelbtn.sizePolicy().hasHeightForWidth())
+        self.cancelbtn.setSizePolicy(sizePolicy6)
+
+        self.horizontalLayout_7.addWidget(self.cancelbtn)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_7)
@@ -428,13 +424,13 @@ class Ui_Data_conversion(QWidget):
         self.Qsize_widget.setObjectName(u"Qsize_widget")
         self.Qsize_widget.setMinimumSize(QSize(16, 16))
         self.Qsize_widget.setStyleSheet(u"background-image: url(:/images/images/cil-size-grip.png);")
-        QSizeGrip(self.Qsize_widget)
+
         self.horizontalLayout_9.addWidget(self.Qsize_widget, 0, Qt.AlignRight)
 
-
+        QSizeGrip(self.Qsize_widget)
         self.verticalLayout_3.addLayout(self.horizontalLayout_9)
-
-
+    
+        self.frame.installEventFilter(self)
         self.retranslateUi()
 
         QMetaObject.connectSlotsByName(self)
@@ -468,52 +464,48 @@ class Ui_Data_conversion(QWidget):
         self.update_file.setText(QCoreApplication.translate("Form", u"update", None))
         self.DC_OutPutLB.setText(QCoreApplication.translate("Form", u"Output Folder", None))
         self.DC_OutputPB.setText(QCoreApplication.translate("Form", u"Browse", None))
-        self.label_5.setText(QCoreApplication.translate("Form", u"Cnv", None))
-        self.label_6.setText(QCoreApplication.translate("Form", u"Csv", None))
-        self.groupBox.setTitle(QCoreApplication.translate("Form", u"Output file format information", None))
-        self.DP_OPFileName_LE.setText(QCoreApplication.translate("Form", u"Output File Name", None))
+        self.label_5.setText(QCoreApplication.translate("Form", u"Input Files / Input folder", None))
+        self.label_6.setText(QCoreApplication.translate("Form", u"Output folder", None))
+        self.groupBox.setTitle(QCoreApplication.translate("Form", u"Convert data", None))
         self.DC_convertData_PB.setText(QCoreApplication.translate("Form", u"Convert ", None))
+        self.cancelbtn.setText(QCoreApplication.translate("Form", u"Cancel conversion", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"DAM-IOW-V1.0", None))
+        self.progressBar.setValue(0)
     # retranslateUi
 
 
 
 
-        self.frame.installEventFilter(self)
+
+
+
+
+
+        
 
 
 
     def eventFilter(self, obj, event) -> bool:
         
         if obj == self.frame:
-            if self.data_conversion_close.underMouse():
-                return True
-            if self.data_conversion_min.underMouse():
-                return True
-            if self.data_conversion_max.underMouse():
-                return True
-            if self.data_conversion_settings.underMouse():
-                return True
-            else:
-            
-                if event.type() == QEvent.MouseButtonRelease:
-                    if event.globalPos().y() < 10 and self.moved:
-                        self.prevGeo = self.geometry()
-                        self.showMaximized()
-                        return True
+            if event.type() == QEvent.MouseButtonRelease:
+                if event.globalPos().y() < 10 and self.moved:
+                    self.prevGeo = self.geometry()
+                    self.showMaximized()
+                    return True
 
-                if event.type() == QEvent.MouseButtonDblClick:
-                    self.setWindowState(self.windowState() ^ Qt.WindowFullScreen)
-                    return True
-                if event.type() == QEvent.MouseButtonPress:
-                        self.oldPosition = event.globalPos()
-                if event.type() == QEvent.MouseMove:
-                    delta = QPoint(event.globalPos() - self.oldPosition)
-                    self.move(self.x() + delta.x(), self.y() + delta.y())
+            if event.type() == QEvent.MouseButtonDblClick:
+                self.setWindowState(self.windowState() ^ Qt.WindowFullScreen)
+                return True
+            if event.type() == QEvent.MouseButtonPress:
                     self.oldPosition = event.globalPos()
-                    self.moved = True
-                else:
-                    return True
+            if event.type() == QEvent.MouseMove:
+                delta = QPoint(event.globalPos() - self.oldPosition)
+                self.move(self.x() + delta.x(), self.y() + delta.y())
+                self.oldPosition = event.globalPos()
+                self.moved = True
+            else:
+                return True
             
             return True
 

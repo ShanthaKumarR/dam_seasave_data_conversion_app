@@ -14,9 +14,8 @@ class SaveHistory(ABC):
 class PreviousData(SaveHistory):
     def __init__(self, dir_path = "temp_files"):
         self.temp_folder_path = dir_path
-        file_names_list = ["instrument_config.json", "cnv_converter.json"]
-        keys = [['setup_file_path', 'instrument_config_file_path', 'archive_folder_path', 'output_data_folder_path', 'system_file_path',\
-        'instrument_type', 'cast_type', 'cast_number'], ['is_file', 'output_folder_path', 'input_file_path', 'output_data_format', 'data_base_type', 'Qflag_status']]
+        file_names_list = ["cnv_converter.json"]
+        keys = [['is_file', 'output_folder_path', 'input_file_path', 'output_data_format', 'data_base_type', 'Qflag_status']]
 
         if os.path.isdir(self.temp_folder_path):
             for key_list, file_name in zip(keys, file_names_list):

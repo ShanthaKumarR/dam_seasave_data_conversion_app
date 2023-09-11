@@ -5,6 +5,9 @@ import os
 import csv
 from abc import ABC, abstractmethod
 from typing import Callable, Generator
+import pandas as pd
+import dask as ds
+
 
 
 class SourceFileInfo(ABC):
@@ -39,18 +42,19 @@ class CsvWriter(DataWriter):
         try:
             if os.path.isfile(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv'):
                 os.remove(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv')
-            with open(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv', 'a',  encoding="utf-8", newline="") as inx:
-                write = csv.writer(inx)
+            with open(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv', 'a',  encoding="utf-8" , newline="") as inx:
+                write = csv.writer(inx, delimiter=',')
                 write.writerow(index)
             return True
         except FileNotFoundError:
             return False
+        except PermissionError:
+            return False
            
     def data_writer(self, string_check, f, Qflag = None, addQflag = None):
-           
-            with open(f, 'r',  encoding="utf-8", newline="") as source_file:
+            with open(f, 'r',  encoding="ISO-8859-1") as source_file:
                 if os.path.exists(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.csv'):
-                    with open(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.csv', 'a') as target_file:
+                    with open(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.csv', 'a' , newline="") as target_file:
                         write = csv.writer(target_file)
                         for line in source_file:
                             if( string_check.search(line) == None): 
@@ -80,12 +84,13 @@ class TextWriter(DataWriter):
                 inx.write('\n')
             return True
         except FileNotFoundError:
+           
             return False
     def data_writer(self, string_check, f, Qflag = None, addQflag = None):
            
-            with open(f, 'r',  encoding="utf-8", newline="") as source_file:
+            with open(f, 'r',  encoding="ISO-8859-1", newline="") as source_file:
                 if os.path.exists(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.txt'):
-                    with open(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.txt', 'a') as target_file:
+                    with open(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.txt',  'a') as target_file:
                         for line in source_file:
                             if( string_check.search(line) == None): 
                                 data_line = line.split(r"\t")[0].strip()
@@ -148,11 +153,8 @@ class PangaeaColumnAttribute(DatabaseFormat):
         try:
             with open ('seasave_data_conversion\\index.json', 'r', encoding="utf-8") as index:
                 self.pangaea_attribute_dict =  json.load(index)
-        except FileNotFoundError:
-            '''write to log file'''
-            #print('i am in except block')
+        except:
             pass
-
     def get_attribute(self):
         return self.pangaea_attribute_dict
 
@@ -195,15 +197,16 @@ class ExtractMetaData(MetaData):
     def get_index_from_file(cls, column_attributes:Callable[[], dict], file_names:str, data_base_type:str)->list:
         new_attribute = list()
         column_attributes = column_attributes()
-       
         with open(file_names, 'r') as file:
+            print(file_names)
             for line in file:
                 if cls.string_check.search(line):
                     if 'name' in line:               
-                        line =line.split('=')[1].split(':')[0].strip()
                         if data_base_type == 'default':
+                            line =line.split('=')[1].split(':')[1].strip()
                             new_attribute.append(line)
                         else:
+                            line =line.split('=')[1].split(':')[0].strip()
                             if line in column_attributes:
                                 new_attribute.append(column_attributes[line][0][data_base_type])
                             else:
@@ -217,20 +220,43 @@ class ExtractMetaData(MetaData):
         return [column_attributes.append(flag) for flag in quality_flags][0]
             
 
-if __name__ == "__main__":
-    obj = SingleOrBatch("F:\\final_devlopment\\with_desgn_patterns\\after_marnet\\testdata")
 
-    full_file_names = obj.get_file_names(obj.check_Isfile())
-
-    writer_obj = CsvWriter("F:\\final_devlopment\\with_desgn_patterns\\after_marnet\\trg")
-    pan_inx = PangaeaColumnAttribute()
-
-    for i, j, f in ExtractMetaData.get_index_from_file(column_attributes = pan_inx.get_attribute, file_names = full_file_names, data_base_type = PangaeaTypeDataBase.get_database_type):
-        writer_obj.attribute_write(j, f)
-        for val in writer_obj.data_writer(i, ExtractMetaData.string_check, f):
-            print(val)
             
-            
+class XlxsGenerator(CsvWriter):
+    def __init__(self, converted_data_folder:str):
+        self.converted_data_folder = converted_data_folder
 
-
-
+    def attribute_write(self, index:list, f:str):
+        try:
+            if os.path.isfile(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv'):
+                os.remove(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv')
+            with open(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv', 'a',  encoding="utf-8" , newline="") as inx:
+                write = csv.writer(inx, delimiter=',')
+                write.writerow(index)
+            return True
+        except FileNotFoundError:
+            return False
+        except PermissionError:
+            return False
+           
+    def data_writer(self, string_check, f, Qflag = None, addQflag = None):
+            with open(f, 'r',  encoding="ISO-8859-1") as source_file:
+                if os.path.exists(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.csv'):
+                    with open(self.converted_data_folder+'/'+f.split('/')[-1].split('.')[0]+'.csv', 'a' , newline="") as target_file:
+                        write = csv.writer(target_file)
+                        for line in source_file:
+                            if( string_check.search(line) == None): 
+                                data_line = line.split(r"\t")[0].strip()
+                                data_line = data_line.split()
+                                if addQflag:
+                                    write.writerow(data_line+Qflag)
+                                else:
+                                    write.writerow(data_line)
+                                
+                            #yield progress_bar_value       
+                    read_file = pd.read_csv (self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv')
+                    read_file.to_excel (self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.xlsx', index = None, header=True)
+                    os.remove(self.converted_data_folder+r'/'+f.split(r'/')[-1].split('.')[0]+'.csv')
+                    return True
+                else:
+                    pass

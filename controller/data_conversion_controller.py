@@ -3,17 +3,29 @@ from queue import Queue
 from threading import Thread, Lock
 from typing import Callable
 from PyQt5.QtWidgets import QFileDialog, QFileSystemModel, QTreeView, QTextEdit, QVBoxLayout, QMessageBox, QDialog, QDialogButtonBox, QLabel
-
 import os
 from PyQt5.QtCore import pyqtSignal, QThread
-
 from PyQt5.QtCore import QSize 
 import json
-
-
 from UI.QFlag import QFlagWindow
-
+from log import empty_field_alert
 import math
+import logging
+
+try:
+    if os.path.isdir('log'):
+        pass
+    else:
+        os.mkdir('log')        
+except:
+     pass
+    
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
+file_handler = logging.FileHandler('log\\data_conversion.log')
+file_handler.setFormatter(formatter)
+LOGGER.addHandler(file_handler)
 
 
 class InputFileSystemViewer:
@@ -135,6 +147,7 @@ class DataConversionController(InputFileSystemViewer):
     def __init__(self, data_conversion_object, data_base_options, output_file_formatting):
         
         self.view = data_conversion_object['view']
+        self.set_style_sheet = data_conversion_object['stylesheet']
         #self.view.data_conversion_ui(self)
         self.data_base_options = data_base_options
         self.output_file_formatting =output_file_formatting
@@ -160,14 +173,14 @@ class DataConversionController(InputFileSystemViewer):
         self.my_obj = self.data_conversion_previous_data()
         #self.data_conversion_on_open_run()
     
-    def start_condition_check(self):
-        emmpty_path_info_alert = QMessageBox()
-        emmpty_path_info_alert.setIcon(QMessageBox.Information)
-        emmpty_path_info_alert.setInformativeText("Please provide the input files or input folder and output folder directory information")
-        emmpty_path_info_alert.setStandardButtons(QMessageBox.Ok)
-        emmpty_path_info_alert.resize(450, 100)
-        emmpty_path_info_alert.setWindowTitle("File Information Alert")
-        emmpty_path_info_alert.exec_()
+    def start_condition_check(self, msg):
+        empty_path_info_alert = QMessageBox()
+        empty_path_info_alert.setIcon(QMessageBox.Information)
+        empty_path_info_alert.setInformativeText(msg)
+        empty_path_info_alert.setStandardButtons(QMessageBox.Ok)
+        empty_path_info_alert.resize(450, 100)
+        empty_path_info_alert.setWindowTitle("File Information Alert")
+        empty_path_info_alert.exec_()
 
     def get_input_dir_path(self, InputdirLE, obj):
         temp_input_dir_path = InputdirLE.text()
@@ -247,9 +260,12 @@ class DataConversionController(InputFileSystemViewer):
                 else:
                     self.file_conversion_with_no_qflag()
             else:
-                self.start_condition_check()
+                LOGGER.info('Input directory or output directory path is not assigned')
+                self.start_condition_check('Input directory or output directory path is not assigned')
+
         except TypeError:
-            self.start_condition_check()
+            self.start_condition_check('NO cnv file found in the given input locaiton')
+            LOGGER.info('No cnv file file found in the given location')
     
     def attribute_receiver_handler(self, column_attributes, file, lk, qu):
         with lk:
@@ -318,7 +334,7 @@ class DataConversionController(InputFileSystemViewer):
         self.view.close()
 
     def data_conversion_on_open_run(self):
-        try:
+      
             with open('temp_files\\cnv_converter.json', 'r') as file:
                 content = json.load(file)
             for key in list(content.keys()):
@@ -372,16 +388,17 @@ class DataConversionController(InputFileSystemViewer):
                         self.get_column_attribute()
 
                 elif key == 'Qflag_status':
-                    try:
-                        self.quality_falg_rb[content[key]].setChecked(True) 
-                    except:
-                        self.view.QFlag_batch_of_file.setChecked(True) 
+                    if content[key] == 'nil':
+                        self.quality_falg_rb['group_files'].setChecked(True)
+                    else:
+                        if content[key] == 'group_files':
+                            empty_field_alert('Previously you selected simlar quality flag option for data conversion. So please ensure all selected files have same column arrtibute')
+                        self.quality_falg_rb[content[key]].setChecked(True)
             
             self.view.show()
+            self.set_style_sheet()
             self.view.app.exec_()
-        except FileNotFoundError:
-            self.view.show()
-            self.view.app.exec_()
+        
         
 
     def set_input_file_to_line_edit(self):
@@ -415,28 +432,31 @@ class DataConversionController(InputFileSystemViewer):
 
     def batch_of_file_conversion_with_same_qflag(self, temp_attribut:dict)->None:
         self.p_value = 0
-        file_list = self.get_file_list()
+        self.file_list = self.get_file_list()
 
-        my_dialog_obj = QFlagWindow(self.output_file_type.attribute_write, file_list[0], self.output_dir_path, self.output_file_formatting['Meta_data'].string_check, self.output_file_type.data_writer, True, temp_attribut)                   
+        my_dialog_obj = QFlagWindow(self.output_file_type.attribute_write, self.file_list[0], self.output_dir_path, self.output_file_formatting['Meta_data'].string_check, self.output_file_type.data_writer, True, temp_attribut)                   
         my_dialog_obj.exec()
-        new_index = my_dialog_obj.new_index
-
-        self.batch_file_thread = BatchFileThread(column_attributes = self.column_attribute.get_attribute, selected_data_base=self.selected_data_base,\
-             files= file_list, attribute_receiver=self.output_file_formatting['Meta_data'].get_index_from_file, writer_class=self.output_file_type,\
-                  string_check=self.output_file_formatting['Meta_data'].string_check, Qflag = my_dialog_obj.flag_values, addQflage=True, selected_flag = new_index)
-        
-        self.batch_file_thread.start()
-        self.batch_file_thread.signal_to_update_progress_bar.connect(self.update_progressbar)
-
-    def get_file_list(self):
         try:
-            if self.assign_file_or_folder():
-                return self.batch_input_file_name
-            else:
-                return [self.input_file_name+"/"+ x for x in os.listdir(self.input_file_name) if x.endswith('.cnv')]
-        except FileNotFoundError:
+            new_index = my_dialog_obj.new_index
+
+            self.batch_file_thread = BatchFileThread(column_attributes = self.column_attribute.get_attribute, selected_data_base=self.selected_data_base,\
+                files= self.file_list, attribute_receiver=self.output_file_formatting['Meta_data'].get_index_from_file, writer_class=self.output_file_type,\
+                    string_check=self.output_file_formatting['Meta_data'].string_check, Qflag = my_dialog_obj.flag_values, addQflage=True, selected_flag = new_index)
+            
+            self.batch_file_thread.start()
+            self.batch_file_thread.signal_to_update_progress_bar.connect(self.update_progressbar)
+        except AttributeError:
             pass
-            #self.start_condition_check()
+    def get_file_list(self):
+    
+        if self.assign_file_or_folder():
+            return self.batch_input_file_name
+        else:
+            file_list = [self.input_file_name+"/"+ x for x in os.listdir(self.input_file_name) if x.endswith('.cnv')]
+            if len(file_list) == 0:
+                return None
+            else:
+                return file_list
 
     def file_conversion_with_no_qflag(self ):
         self.p_value = 0
@@ -455,6 +475,16 @@ class DataConversionController(InputFileSystemViewer):
             my_dialog_obj = QFlagWindow(self.output_file_type.attribute_write, file, self.output_dir_path, self.output_file_formatting['Meta_data'].string_check, self.output_file_type.data_writer,False, temp_attribut.get())                   
             my_dialog_obj.exec()
             self.update_progress_handler(val)
+            
+    def terminate_data_conversion(self):
+        try:
+            self.batch_file_thread.terminate()
+            self.view.progressBar.setValue(0)
+        except AttributeError:
+            self.view.progressBar.setValue(0)
+
+    def similar_Qflage_alert(self):
+        empty_field_alert('You selected simlar quality flag option. So please ensure all selected files have same column arrtibute')
 
 class BatchFileThread(QThread):
     signal_to_update_progress_bar = pyqtSignal(float)
